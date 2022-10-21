@@ -2,11 +2,102 @@ package prZoologicoDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public abstract class AnimalDAO {
 	
 	private static Connection conexion;
+	
+	public static ArrayList<Animal> findAllAnimales(){
+		
+		conexion=openConnection();
+		String query = "select * from animales";
+		Animal animal = null;
+		ArrayList<Animal> animales=null;
+		 
+		try {
+			Statement statement = conexion.createStatement();
+			ResultSet rs =statement.executeQuery(query);
+			
+			while (rs.next()) {
+				animal = new Animal(
+						rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getString("habitat"),
+						rs.getDouble("peso_aprox")
+						);
+				animales.add(animal);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return animales;
+	}
+	
+	private static Animal findAnimalById (int id) {
+		
+		conexion = openConnection();
+		String query = "select * from animales where id = ?";
+		Animal animal=null;
+		try {
+			PreparedStatement ps = conexion.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				 animal = new Animal(
+						rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getString("habitat"),
+						rs.getDouble("peso_aprox")
+						);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		closeConnection();
+		
+		
+		return animal;
+	}
+	
+	
+	
+	public static void deleteAnimalByNombre (String name) {
+		
+		conexion = openConnection();
+		String query = "delete from animales where nombre = "+"'"+name+"'";
+		try {
+			Statement statement = conexion.createStatement();
+			statement.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		closeConnection();
+	}
+	
+	
+	public static void deleteAnimal() {
+		
+		conexion = openConnection();
+		String query = "delete from animales";
+		try {
+			Statement statement = conexion.createStatement();
+			statement.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		closeConnection();
+	}
 	
 	public static void insertAnimal(Animal animal) {
 		conexion = openConnection();
