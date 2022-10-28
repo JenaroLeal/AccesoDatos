@@ -9,6 +9,8 @@ public class Serie {
 	private int edad;
 	private String plataforma;
 	private ArrayList<Temporada> temporadas;
+	
+	
 
 	public Serie(String titulo, int edad, String plataforma) {
 		super();
@@ -25,6 +27,14 @@ public class Serie {
 		this.edad = edad;
 		this.plataforma = plataforma;
 		this.temporadas = temporadas;
+	}
+
+	public Serie(int id, String titulo, int edad, String plataforma) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.edad = edad;
+		this.plataforma = plataforma;
 	}
 
 	public int getId() {
