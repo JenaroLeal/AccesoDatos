@@ -2,13 +2,16 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import pojo.Serie;
 import pojo.Temporada;
 import util.DataBaseConnection;
 
-public class TemporadaDao implements Dao<Temporada>{
+public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 
 	private static Connection connection;
 	
@@ -16,9 +19,31 @@ public class TemporadaDao implements Dao<Temporada>{
 		
 	}
 	@Override
-	public ArrayList<Temporada> buscatTodos() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Temporada> buscarTodos() {
+		connection = openConnection();
+		String query = "select * from temporadas";
+		Temporada temp = null;
+		ArrayList<Temporada> temporadas = null;
+
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+
+			while (rs.next()) {
+				rs.getInt("serie_id");
+				SerieDao serieDao = new SerieDao();
+				Serie s = serieDao.buscarPorId(0);
+				
+				temp = new Temporada(rs.getInt("id"), rs.getInt("num_temporadas"), rs.getString("titulo"),s);
+						
+				temporadas.add(temp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return temporadas;
 	}
 
 	@Override
@@ -30,7 +55,7 @@ public class TemporadaDao implements Dao<Temporada>{
 	@Override
 	public void insertar(Temporada temp) {
 		
-connection=openConnection();
+		connection=openConnection();
 		
 		String query = "insert into temporadas (num_temporadas, titulo,  serie_id) values (?, ?, ?)";
 		
@@ -57,24 +82,21 @@ connection=openConnection();
 
 	@Override
 	public void borrar(Temporada t) {
-		// TODO Auto-generated method stub
 		
-	}
-	private static Connection openConnection() {
-
-		DataBaseConnection dbConnection = new DataBaseConnection();
-		connection = dbConnection.getConnection();
-		return connection;
-	}
-
-	private static void closeConnection() {
+		connection=openConnection();
+		
+		String query = "delete from temporadas where serie_id = "+t.getSerie().getId();
+		
 		try {
-			connection.close();
-			connection = null;
+			Statement st = connection.createStatement();
+			st.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		closeConnection();
+		
 	}
+	
 
 }
