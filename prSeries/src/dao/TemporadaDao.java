@@ -84,18 +84,36 @@ public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 	public void borrar(Temporada t) {
 		
 		connection=openConnection();
-		
-		String query = "delete from temporadas where serie_id = "+t.getSerie().getId();
+		int id = t.getId();
+		String query = "delete from temporadas where id = ?";
 		
 		try {
-			Statement st = connection.createStatement();
-			st.executeUpdate(query);
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, id);
+			st.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		closeConnection();
 		
+	}
+	public void borrarPorSerie(int serie_id) {
+		
+		connection=openConnection();
+		
+		String query = "Delete from temporadas where serie_id = ?";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, serie_id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		closeConnection();
 	}
 	
 
