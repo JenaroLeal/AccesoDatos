@@ -11,13 +11,14 @@ import pojo.Serie;
 import pojo.Temporada;
 import util.DataBaseConnection;
 
-public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
+public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada> {
 
 	private static Connection connection;
-	
+
 	public TemporadaDao() {
-		
+
 	}
+
 	@Override
 	public ArrayList<Temporada> buscarTodos() {
 		connection = openConnection();
@@ -33,9 +34,9 @@ public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 				rs.getInt("serie_id");
 				SerieDao serieDao = new SerieDao();
 				Serie s = serieDao.buscarPorId(0);
-				
-				temp = new Temporada(rs.getInt("id"), rs.getInt("num_temporadas"), rs.getString("titulo"),s);
-						
+
+				temp = new Temporada(rs.getInt("id"), rs.getInt("num_temporadas"), rs.getString("titulo"), s);
+
 				temporadas.add(temp);
 			}
 		} catch (SQLException e) {
@@ -48,17 +49,37 @@ public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 
 	@Override
 	public Temporada buscarPorId(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "select * from temporadas where id = ?";
+		Statement statement;
+		Temporada temporada = new Temporada();
+
+		try {
+
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, i);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				SerieDao serieDao = new SerieDao();
+				Serie s = serieDao.buscarPorId(temporada.getSerie().getId());
+				temporada = new Temporada(rs.getInt("id"), rs.getInt("num_temporadas"), rs.getString("titulo"), s);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return temporada;
+
 	}
 
 	@Override
 	public void insertar(Temporada temp) {
-		
-		connection=openConnection();
-		
+
+		connection = openConnection();
+
 		String query = "insert into temporadas (num_temporadas, titulo,  serie_id) values (?, ?, ?)";
-		
+
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setInt(1, temp.getNum_temporada());
@@ -69,24 +90,24 @@ public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		closeConnection();
-		
+
 	}
 
 	@Override
 	public void modificar(Temporada t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void borrar(Temporada t) {
-		
-		connection=openConnection();
+
+		connection = openConnection();
 		int id = t.getId();
 		String query = "delete from temporadas where id = ?";
-		
+
 		try {
 			PreparedStatement st = connection.prepareStatement(query);
 			st.setInt(1, id);
@@ -96,12 +117,13 @@ public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 			e.printStackTrace();
 		}
 		closeConnection();
-		
+
 	}
+
 	public void borrarPorSerie(int serie_id) {
-		
-		connection=openConnection();
-		
+
+		connection = openConnection();
+
 		String query = "Delete from temporadas where serie_id = ?";
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
@@ -111,10 +133,8 @@ public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		closeConnection();
 	}
-	
 
 }

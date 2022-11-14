@@ -6,6 +6,10 @@ public class Temporada {
 	private int num_temporada;
 	private String titulo;
 	private Serie serie;
+	
+	public Temporada() {
+		
+	}
 
 	public Temporada(int num_temporada, String titulo, Serie serie) {
 		super();
