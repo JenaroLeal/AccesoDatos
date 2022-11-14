@@ -10,7 +10,7 @@ public class DataBaseConnection {
 	
 	public Connection getConnection() {
 		
-		String dbName = "compositorespelis";
+		String dbName = "peliculascompositores";
 		String userName="root";
 		String password = "jenaroleal";
 		try {

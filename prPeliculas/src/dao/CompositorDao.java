@@ -123,9 +123,11 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 	@Override
 	public void borrar(Compositor compositor) {
 		
+		
 		int compositor_id =compositor.getId();
 		PeliculaDao peliculaDao = new PeliculaDao();
 		peliculaDao.borrarPorCompositor(compositor_id);
+		connection=openConnection();
 		
 		String query = "delete from compositores where id = ?";
 		try {
@@ -136,7 +138,7 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 			
 			e.printStackTrace();
 		}
-		connection=openConnection();
+		
 		
 		closeConnection();
 

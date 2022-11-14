@@ -10,7 +10,7 @@ public class Compositor {
 	private int año_nacimiento;
 	private ArrayList<Pelicula> peliculas;
 	
-	public Compositor (String nomnre, String nacionalidad, int año_nacimiento) {
+	public Compositor (String nombre, String nacionalidad, int año_nacimiento) {
 		super();
 		this.id=id;
 		this.nombre=nombre;
