@@ -22,6 +22,15 @@ public class Pelicula {
 		this.año_lanzamiento = año_lanzamiento;
 		this.compositor = compositor;
 	}
+	public Pelicula(int id, String nombre, int duracion, int año_lanzamiento) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.duracion = duracion;
+		this.año_lanzamiento = año_lanzamiento;
+		
+	}
+	
 	public int getId() {
 		return id;
 	}

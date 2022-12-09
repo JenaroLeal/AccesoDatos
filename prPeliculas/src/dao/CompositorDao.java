@@ -34,7 +34,21 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 			ResultSet rs = statement.executeQuery(query);
 			
 			while (rs.next()) {
-				compositor = new Compositor(rs.getInt("id"),rs.getString("nombre"),rs.getString("nacionalidad"),rs.getInt("año_nacimiento"));
+				ArrayList<Pelicula> peliculas = new ArrayList<Pelicula>();
+				compositor = new Compositor(rs.getInt("id"),rs.getString("nombre"),rs.getString("nacionalidad"),rs.getInt("año_nacimiento"),peliculas);
+				String query_peliculas = "select * from peliculas where compositor_id = ?";
+				PreparedStatement ps_peliculas = connection.prepareStatement(query_peliculas);
+				ps_peliculas.setInt(1, rs.getInt("id"));
+				ResultSet rs_peliculas = ps_peliculas.executeQuery();
+				
+				while (rs_peliculas.next()) {
+					Pelicula pelicula = new Pelicula(rs_peliculas.getInt("id"),
+							rs_peliculas.getString("nombre"),
+							rs_peliculas.getInt("duracion_min"),
+							rs_peliculas.getInt("año_lanzamiento"));
+					peliculas.add(pelicula);
+				}
+				compositor.setPeliculas(peliculas);
 				compositores.add(compositor);
 			}
 		} catch (SQLException e) {
