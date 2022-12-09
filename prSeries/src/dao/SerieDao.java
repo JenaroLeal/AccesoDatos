@@ -31,8 +31,23 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 			ResultSet rs = statement.executeQuery(query);
 
 			while (rs.next()) {
+
+				ArrayList<Temporada> temporadas = new ArrayList<Temporada>();
+
 				serie = new Serie(rs.getInt("id"), rs.getString("titulo"), rs.getInt("edad"),
-						rs.getString("plataforma"));
+						rs.getString("plataforma"), temporadas);
+
+				String query_temporadas = "select * from temporadas where serie_id= ?";
+				PreparedStatement ps_temporadas = connection.prepareStatement(query_temporadas);
+				ps_temporadas.setInt(1, rs.getInt("id"));
+				ResultSet rs_temporadas = ps_temporadas.executeQuery();
+				
+				while (rs_temporadas.next()) {
+					Temporada temporada = new Temporada(rs_temporadas.getInt("id"),
+							rs_temporadas.getInt("num_temporadas"), rs_temporadas.getString("titulo"));
+					temporadas.add(temporada);
+				}
+				serie.setTemporadas(temporadas);
 				series.add(serie);
 			}
 		} catch (SQLException e) {
@@ -56,8 +71,8 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 
 			while (rs.next()) {
 				serie = new Serie(rs.getInt("id"), rs.getString("titulo"), rs.getInt("edad"),
-						rs.getString("plataforma"),null);
-				
+						rs.getString("plataforma"), null);
+
 				serie.setTemporadas(obtenerTemporadas(serie));
 
 			}
@@ -174,22 +189,22 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 
 	@Override
 	public void borrar(Serie serie) {
-		
-		int serie_id= serie.getId();
+
+		int serie_id = serie.getId();
 		TemporadaDao temporadaDao = new TemporadaDao();
 		temporadaDao.borrarPorSerie(serie_id);
-		
+
 		String query = "Delete from series where id = ?";
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setInt(1, serie_id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-		connection=openConnection();
-		
+		connection = openConnection();
+
 		closeConnection();
 
 	}

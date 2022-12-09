@@ -25,6 +25,14 @@ public class Temporada {
 		this.titulo = titulo;
 		this.serie = serie;
 	}
+	
+	public Temporada(int id, int num_temporada, String titulo) {
+		super();
+		this.id = id;
+		this.num_temporada = num_temporada;
+		this.titulo = titulo;
+		
+	}
 
 	public int getId() {
 		return id;

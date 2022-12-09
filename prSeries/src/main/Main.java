@@ -13,6 +13,7 @@ public class Main {
 		
 		//Serie serie = new Serie ("Los Simpsons",7,"Disney+");
 		SerieDao serieDao = new SerieDao();
+		/*
 		//serieDao.insertar(serie);
 
 		//Serie serie = serieDao.buscarPorId(1);
@@ -31,6 +32,17 @@ public class Main {
 		for(Temporada temporada : temporadas) {
 			System.out.println(temporada);
 		}
+	*/
+		ArrayList<Serie> series = serieDao.buscarTodos();
+		for(Serie serie : series) {
+			System.out.println("Serie: "+serie.getTitulo());
+			for(Temporada temporada : serie.getTemporadas()) {
+				System.out.println("Temporada: "+temporada.getTitulo());
+			}
+		}
+		
+		
 	}
+	
 
 }
