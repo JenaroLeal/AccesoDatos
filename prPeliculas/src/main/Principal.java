@@ -21,9 +21,9 @@ public class Principal {
 
 		cd.insertar(c);
 		
-		Compositor cc =cd.buscarporId(21);
+		Compositor cc =cd.buscarporId(1);
 		
-		System.out.println(cc.getNombre());
+		
 		
 		Pelicula p = new Pelicula("ReyLeon",175,2018,cc);
 		Pelicula p1 = new Pelicula ("El último Samurai",145,2015,cc);
