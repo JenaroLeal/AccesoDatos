@@ -209,5 +209,6 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		return peliculas;
 		
 	}
+	
 
 }

@@ -17,7 +17,7 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 	@Override
 	public ArrayList<Pelicula> buscarTodos() {
 		connection = openConnection();
-		String query = "select * from temporadas";
+		String query = "select * from peliculas";
 		Pelicula pelicula = null;
 		ArrayList<Pelicula> peliculas = null;
 
@@ -150,5 +150,48 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 		closeConnection();
 
 	}
+	
+	
+	public ArrayList<Pelicula>peliculasPorDecada(int primero, int segundo){
+		
+		Pelicula pelicula = null;
+		ArrayList<Pelicula> peliculas = new ArrayList<Pelicula>();
+		
+		connection = openConnection();
+		String query = "select * from peliculas where año_lanzamiento>=? and año_lanzamiento<?";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, primero);
+			ps.setInt(2, segundo);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Compositor c = new Compositor();
+				pelicula = new Pelicula (rs.getInt("id"),rs.getString("nombre"),rs.getInt("duracion_min"),rs.getInt("año_lanzamiento"),c);
+				peliculas.add(pelicula);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		closeConnection();
+		return peliculas;
+		
+	}
+	
+	public void truncatePelicula() {
+		connection=openConnection();
+		String query = "Truncate table peliculas";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+	}
+	
 
 }

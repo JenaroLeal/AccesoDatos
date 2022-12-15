@@ -34,6 +34,9 @@ public class Compositor {
 		this.nacionalidad = nacionalidad;
 		this.año_nacimiento = año_nacimiento;
 	}
+	public Compositor() {
+		
+	}
 
 	public int getId() {
 		return id;

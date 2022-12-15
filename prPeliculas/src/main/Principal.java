@@ -10,12 +10,12 @@ import pojo.Pelicula;
 public class Principal {
 
 	public static void main(String[] args) {
-		
-		
+
 		CompositorDao cd = new CompositorDao();
-		
+
 		PeliculaDao pd = new PeliculaDao();
-		
+		pd.truncatePelicula();
+
 		Compositor c = new Compositor ("Hans Zimmer", "Alemania",1957);
 		
 
@@ -37,8 +37,9 @@ public class Principal {
 				System.out.println("Pelicula: "+pelicula.getNombre());
 			}
 		}
-		
-		
+
+		System.out.println(pd.peliculasPorDecada(2010, 2020));
+
 	}
 
 }

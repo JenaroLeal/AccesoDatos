@@ -7,6 +7,7 @@ public class Pelicula {
 	private int duracion;
 	private int año_lanzamiento;
 	private Compositor compositor;
+	private int compositor_id;
 	public Pelicula(String nombre, int duracion, int año_lanzamiento, Compositor compositor) {
 		super();
 		this.nombre = nombre;
@@ -29,6 +30,14 @@ public class Pelicula {
 		this.duracion = duracion;
 		this.año_lanzamiento = año_lanzamiento;
 		
+	}
+	public Pelicula(int id, String nombre, int duracion, int año_lanzamiento, int compositor_id) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.duracion = duracion;
+		this.año_lanzamiento = año_lanzamiento;
+		this.compositor_id=compositor_id;
 	}
 	
 	public int getId() {
@@ -61,11 +70,19 @@ public class Pelicula {
 	public void setCompositor(Compositor compositor) {
 		this.compositor = compositor;
 	}
+	
+	public int getCompositor_id() {
+		return compositor_id;
+	}
+	public void setCompositor_id(int compositor_id) {
+		this.compositor_id = compositor_id;
+	}
 	@Override
 	public String toString() {
-		return "Nombre: " + nombre + ". Duracion: " + duracion + ". Año lanzamiento: " + año_lanzamiento
-				+ ". Compositor: " + compositor.getNombre();
+		return "Nombre: " + nombre + ". Duracion: " + duracion + ". Año lanzamiento: " + año_lanzamiento+"\n"
+				;
 	}
+	
 	
 	
 
