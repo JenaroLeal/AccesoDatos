@@ -14,7 +14,13 @@ public class Principal {
 		CompositorDao cd = new CompositorDao();
 
 		PeliculaDao pd = new PeliculaDao();
-		pd.truncatePelicula();
+		pd.eliminarTablaPelicula();
+		cd.eliminarTablaCompositor();
+		cd.crearTablaCompositores();
+		pd.crearTablaPeliculas();
+		
+		
+	
 
 		Compositor c = new Compositor ("Hans Zimmer", "Alemania",1957);
 		

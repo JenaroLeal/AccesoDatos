@@ -79,8 +79,8 @@ public class Pelicula {
 	}
 	@Override
 	public String toString() {
-		return "Nombre: " + nombre + ". Duracion: " + duracion + ". Año lanzamiento: " + año_lanzamiento+"\n"
-				;
+		return "Nombre: " + nombre + ". Duracion: " + duracion + ". Año lanzamiento: " + año_lanzamiento+"\n";
+				
 	}
 	
 	

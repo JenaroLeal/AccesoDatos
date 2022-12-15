@@ -179,9 +179,29 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 		
 	}
 	
-	public void truncatePelicula() {
+	public void eliminarTablaPelicula() {
 		connection=openConnection();
-		String query = "Truncate table peliculas";
+		String query = "drop table peliculas";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+	}
+	public void crearTablaPeliculas() {
+		connection=openConnection();
+		String query = "create table peliculas (\r\n"
+				+ "id int primary key auto_increment,\r\n"
+				+ "nombre varchar (40),\r\n"
+				+ "duracion_min int,\r\n"
+				+ "año_lanzamiento int,\r\n"
+				+ "compositor_id int,\r\n"
+				+ "constraint fk_compositor_id foreign key (compositor_id) references compositores (id)\r\n"
+				+ ");";
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.executeUpdate();

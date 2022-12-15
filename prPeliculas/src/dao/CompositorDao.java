@@ -209,6 +209,36 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		return peliculas;
 		
 	}
-	
+	public void eliminarTablaCompositor() {
+		connection=openConnection();
+		String query = "drop table compositores";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+	}
+	public void crearTablaCompositores() {
+		connection=openConnection();
+		String query = "create table compositores (\r\n"
+				+ "id int primary key auto_increment,\r\n"
+				+ "nombre varchar (40),\r\n"
+				+ "nacionalidad varchar(40),\r\n"
+				+ "año_nacimiento int\r\n"
+				+ ");";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+	}
 
 }
