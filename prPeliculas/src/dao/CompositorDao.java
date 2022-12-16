@@ -10,14 +10,24 @@ import java.util.ArrayList;
 import pojo.Compositor;
 import pojo.Pelicula;
 
+/**
+ * Clase para poder utilizar los diferentes metodos asignados a los compositores
+ * @author jenaro
+ *
+ */
 public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> {
 
+	//Variable para poder conectar con la base de datos
 	private static Connection connection;
 	
 	public CompositorDao() {
 		
 	}
 
+	/*
+	 * Método para poder buscar todos los compositores
+	 * return, los compositores encontrados
+	 */
 	@Override
 	public ArrayList<Compositor> buscarTodos() {
 		
@@ -60,6 +70,11 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		return compositores;
 	}
 
+	/**
+	 * Método para poder buscar un compositor en funcion de su id
+	 * i, el id que queremos buscar
+	 * return el compositor encontrado
+	 */
 	@Override
 	public Compositor buscarporId(int i) {
 
@@ -85,6 +100,10 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		return compositor;
 	}
 
+	/**
+	 * Método para poder insertar un compositor
+	 * compositor, el que queremos insertar
+	 */
 	@Override
 	public void insertar(Compositor compositor) {
 
@@ -106,6 +125,10 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		closeConnection();
 	}
 
+	/**
+	 * Método para poder modificar alguno de los datos del compositor
+	 * compositor, el que queremos modificar
+	 */
 	@Override
 	public void modificar(Compositor compositor) {
 
@@ -134,6 +157,10 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 
 	}
 
+	/*
+	 * Método que nos permite borrar un compositor
+	 * compositor, el que queremos eliminar
+	 */
 	@Override
 	public void borrar(Compositor compositor) {
 		
@@ -157,6 +184,12 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		closeConnection();
 
 	}
+	
+	/*
+	 * Método para obtener todas las peliculas en las que ha participado un compositor
+	 * compositor, el que queremos saber las peliculas en las que ha participado
+	 * return las peliculas en las que ha participado
+	 */
 
 	public ArrayList<Pelicula> obtenerPeliculas(Compositor compositor) {
 
@@ -184,6 +217,12 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		return peliculas;
 
 	}
+	
+	/*
+	 * Método para obtener las peliculas de un compositor usando su id
+	 * compositor_id, el id del compositor que queremos obtener las peliculas
+	 * return las peliculas del compositor
+	 */
 	public ArrayList<Pelicula> obtenerPeliculasPorCompositorId (int compositor_id){
 		
 		ArrayList<Pelicula> peliculas = new ArrayList<>();
@@ -209,6 +248,9 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		return peliculas;
 		
 	}
+	/*
+	 * Método para eliminar la tabla compositores
+	 */
 	public void eliminarTablaCompositor() {
 		connection=openConnection();
 		String query = "drop table compositores";
@@ -222,6 +264,10 @@ public class CompositorDao extends ObjetoDao implements InterfazDao<Compositor> 
 		
 		closeConnection();
 	}
+	
+	/*
+	 * Método para crear la tabla compositores
+	 */
 	public void crearTablaCompositores() {
 		connection=openConnection();
 		String query = "create table compositores (\r\n"
